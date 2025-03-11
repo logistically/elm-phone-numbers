@@ -193,6 +193,41 @@ matchingCountry number defaultCountry relevantTypes country =
 
 localizeNumber : Country -> String -> Maybe String
 localizeNumber country number =
+    localizeInternationalNumber country number
+        |> Maybe.andThen
+            (\internationalNumber ->
+                localizeNationalNumber country internationalNumber
+            )
+
+
+localizeNationalNumber : Country -> String -> Maybe String
+localizeNationalNumber country number =
+    case country.nationalPrefix of
+        Nothing ->
+            Just number
+
+        Just prefix ->
+            let
+                prefixLength =
+                    String.length prefix
+            in
+            if String.startsWith prefix number then
+                if
+                    number
+                        |> String.left prefixLength
+                        |> (==) prefix
+                then
+                    Just <| String.dropLeft prefixLength number
+
+                else
+                    Nothing
+
+            else
+                Just number
+
+
+localizeInternationalNumber : Country -> String -> Maybe String
+localizeInternationalNumber country number =
     case country.internationalPrefix of
         Nothing ->
             Just number

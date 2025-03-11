@@ -13,6 +13,20 @@ norwegianConfig =
     }
 
 
+australianConfig =
+    { defaultCountry = countryAU
+    , otherCountries = []
+    , types = PhoneNumber.anyType
+    }
+
+
+ukrainianConfig =
+    { defaultCountry = countryUA
+    , otherCountries = []
+    , types = PhoneNumber.anyType
+    }
+
+
 suite : Test
 suite =
     describe "PhoneNumbersTest API"
@@ -32,6 +46,21 @@ suite =
                     PhoneNumber.valid norwegianConfig "+4740612345"
                         |> Expect.equal True
                         |> Expect.onFail "Not a match for norwegian number with + prefix"
+            , test "Australian mobile number" <|
+                \_ ->
+                    PhoneNumber.valid australianConfig "0439704594"
+                        |> Expect.equal True
+                        |> Expect.onFail "Not a match for Australian number"
+            , test "Ukrainian mobile number" <|
+                \_ ->
+                    PhoneNumber.valid ukrainianConfig "0631234567"
+                        |> Expect.equal True
+                        |> Expect.onFail "Not a match for Ukrainian mobile number"
+            , test "Ukrainian mobile number with incomplete national prefix" <|
+                \_ ->
+                    PhoneNumber.valid ukrainianConfig "631234567"
+                        |> Expect.equal True
+                        |> Expect.onFail "Not a match for Ukrainian mobile number"
             ]
         , describe "type matches"
             [ test "Finds local number" <|
