@@ -6,6 +6,7 @@ import PhoneNumber.Countries exposing (..)
 import Test exposing (..)
 
 
+norwegianConfig : PhoneNumber.Config
 norwegianConfig =
     { defaultCountry = countryNO
     , otherCountries = []
@@ -13,6 +14,7 @@ norwegianConfig =
     }
 
 
+australianConfig : PhoneNumber.Config
 australianConfig =
     { defaultCountry = countryAU
     , otherCountries = []
@@ -20,6 +22,7 @@ australianConfig =
     }
 
 
+ukrainianConfig : PhoneNumber.Config
 ukrainianConfig =
     { defaultCountry = countryUA
     , otherCountries = []
