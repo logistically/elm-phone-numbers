@@ -28,7 +28,7 @@ xml2js.parseString(dbString, parseOptions, (err, result) => {
         .map(territoryToJSON);
 
   const header = `
-module PhoneNumber.Countries exposing (..)
+module PhoneNumber.Countries exposing (all, ${territories.map(t => "country" + t.id).join(",")})
 
 {-| Metadata for most (all?) countries in the world.
 @docs all, ${territories.map(t => "country" + t.id).join(',')}
